@@ -1,4 +1,4 @@
-package org.example;
+package org.example.homework1;
 
 import org.example.homework1.book.Book;
 import org.example.homework1.car.Car;
