@@ -1,4 +1,4 @@
-package org.example.car;
+package org.example.homework1.car;
 
 public interface Drivable {
     public void start();

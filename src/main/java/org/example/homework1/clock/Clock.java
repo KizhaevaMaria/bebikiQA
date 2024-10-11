@@ -1,4 +1,4 @@
-package org.example.clock;
+package org.example.homework1.clock;
 /*
 Задача "Часы":
 

@@ -1,4 +1,4 @@
-package org.example.book;
+package org.example.homework1.book;
 
 /** Задание «Книга»:
 

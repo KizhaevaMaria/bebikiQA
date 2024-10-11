@@ -1,4 +1,4 @@
-package org.example.point;
+package org.example.homework1.point;
 
 public interface Movable {
 
