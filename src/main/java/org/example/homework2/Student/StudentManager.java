@@ -1,0 +1,4 @@
+package org.example.homework2.Student;
+
+public class StudentManager {
+}
