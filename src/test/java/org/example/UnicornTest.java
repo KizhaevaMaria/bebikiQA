@@ -4,6 +4,7 @@ import io.restassured.filter.log.RequestLoggingFilter;
 import io.restassured.filter.log.ResponseLoggingFilter;
 import org.example.api.CheckUnicorn;
 import org.example.api.UnicornRequests;
+import org.example.api.models.Unicorn;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeAll;
@@ -12,48 +13,44 @@ public class UnicornTest {
     @BeforeClass
     public static void setupTest(){
         RestAssured.filters(new RequestLoggingFilter(), new ResponseLoggingFilter());
-        RestAssured.baseURI = "https://crudcrud.com/api/7f7441bfa3b64c5cb3213209aad04eed";
+        RestAssured.baseURI = "https://crudcrud.com/api/025898e300164193942cd04b0495d3a6";
     }
 
     //создание единорога
     @Test
     public void userShouldBeAbleCreateUnicorn (){
 
-        String id = UnicornRequests.createUnicorn("{\n" +
-                "  \"name\": \"Клевый Единорог\",\n" +
-                "  \"tail\": \"Розовый\"\n" +
-                "}");
+        Unicorn unicorn = Unicorn.builder().name("Единорог1").tail("Розовый").build();
+        Unicorn createdUnicorn = UnicornRequests.createUnicorn(unicorn);
 
-        CheckUnicorn.checkUnicornOk(id);
+        CheckUnicorn.checkUnicornOk(createdUnicorn.getId());
     }
 
     //удаление единорога
     @Test
     public void userShouldBeAbleDeleteExistingUnicorn(){
 
-        String id = UnicornRequests.createUnicorn("{\n" +
-                "  \"name\": \"Супер-пупер Единорог\",\n" +
-                "  \"tail\": \"Сиреневый\"\n" +
-                "}");
+        Unicorn unicorn = Unicorn.builder()
+                .name("Единорог2")
+                .tail("Белый").build();
+        Unicorn createdUnicorn = UnicornRequests.createUnicorn(unicorn);
 
-        UnicornRequests.deleteUnicorn(id);
+        UnicornRequests.deleteUnicorn(createdUnicorn.getId());
 
-        CheckUnicorn.checkUnicornNotFound(id);
+        CheckUnicorn.checkUnicornNotFound(createdUnicorn.getId());
     }
 
     //изменение цвета хвоста единорога
     @Test
     public void userShouldBeAbleUpdateTailColor(){
-        String id = UnicornRequests.createUnicorn("{\n" +
-                "  \"name\": \"Единорог\",\n" +
-                "  \"tail\": \"Белый\"\n" +
-                "}");
+        Unicorn unicorn = Unicorn.builder()
+                .name("Единорог3")
+                .tail("Красный").build();
+        Unicorn createdUnicorn = UnicornRequests.createUnicorn(unicorn);
 
-        UnicornRequests.updateUnicorn(id,"{\n" +
-                "  \"name\": \"Единорог\",\n" +
-                "  \"tail\": \"Золотой\"\n" +
-                "}");
+        //обновление цвета хвоста единорога
+        UnicornRequests.updateTailColorUnicorn(createdUnicorn,"Зеленый");
 
-        CheckUnicorn.checkUnicornOk(id);
+        CheckUnicorn.checkUnicornOk(createdUnicorn.getId());
     }
 }
